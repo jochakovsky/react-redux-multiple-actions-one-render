@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
+
 class App extends Component {
+  componentDidUpdate(prevProps) {
+    console.log(`prop 'thing' was ${prevProps.thing}, is now ${this.props.thing}`);
+  }
+  handleButtonClick = () => {
+    this.props.on();
+    this.props.off();
+  };
   render() {
     return (
       <div className="App">
@@ -19,10 +28,34 @@ class App extends Component {
           >
             Learn React
           </a>
+          <button
+            onClick={this.handleButtonClick}
+          >
+            Click me
+          </button>
         </header>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  console.log(`mapStateToProps called with 'thing' as ${state.thing}`);
+  return {
+    thing: state.thing
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    on: () => dispatch({type: 'ON'}),
+    off: () => dispatch({type: 'OFF'})
+  };
+}
+
+const AppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
+
+export default AppContainer;
