@@ -5,6 +5,9 @@ import './App.css';
 
 
 class App extends Component {
+  componentDidMount() {
+    console.log('App component mounted');
+  }
   componentDidUpdate(prevProps) {
     console.log(`prop 'thing' was ${prevProps.thing}, is now ${this.props.thing}`);
   }
